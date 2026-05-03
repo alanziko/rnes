@@ -1,9 +1,13 @@
+use rnes_macros::opcode;
+
 use crate::{
+    addressing::AddressingMode::*,
     bus::Bus,
     cpu::{CPU, StatusRegister},
-    opcode::Operand,
+    instructions::{Operand, opcode::Opcode},
 };
 
+#[opcode(0x69,cycles=2,mode=Implied)]
 pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
     let m = operand.fetch(bus).unwrap();
