@@ -1,4 +1,5 @@
 mod addressing;
+mod bus;
 mod cpu;
 mod opcode;
 
