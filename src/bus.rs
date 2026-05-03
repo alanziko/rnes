@@ -14,3 +14,23 @@ pub trait Bus {
         self.set_byte(address, high);
     }
 }
+
+pub struct Memory {
+    data: [u8; 65536],
+}
+
+impl Bus for Memory {
+    fn get_byte(&self, address: u16) -> u8 {
+        self.data[address as usize]
+    }
+
+    fn set_byte(&mut self, address: u16, value: u8) {
+        self.data[address as usize] = value;
+    }
+}
+
+impl Memory {
+    pub fn new() -> Self {
+        Self { data: [0u8; 65536] }
+    }
+}
