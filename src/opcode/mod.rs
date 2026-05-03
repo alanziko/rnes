@@ -1,9 +1,8 @@
 use crate::addressing::AddressingMode;
 use crate::bus::Bus;
 use crate::cpu::CPU;
-use crate::opcode::instructions::Operand;
 
-pub mod instructions;
+pub mod arithmetic;
 
 type Instruction = fn(&mut CPU, &mut dyn Bus, Operand);
 
@@ -19,6 +18,22 @@ impl Opcode {
             instruction: instruction,
             mode: mode,
             cycles: cycles,
+        }
+    }
+}
+
+pub enum Operand {
+    Address(u16),
+    Value(u8),
+    None,
+}
+
+impl Operand {
+    pub fn fetch(self, bus: &dyn Bus) -> Option<u8> {
+        match self {
+            Operand::Address(address) => Some(bus.get_byte(address)),
+            Operand::Value(value) => Some(value),
+            Operand::None => None,
         }
     }
 }

@@ -6,8 +6,7 @@ mod opcode;
 use crate::addressing::AddressingMode;
 use crate::bus::{Bus, Memory};
 use crate::cpu::CPU;
-use crate::opcode::Opcode;
-use crate::opcode::instructions::Operand;
+use crate::opcode::{Opcode, Operand};
 
 fn instruction(state: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     state.pc = 67;
