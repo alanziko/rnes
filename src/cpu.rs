@@ -9,8 +9,8 @@ pub struct CPU {
     pub ac: u8,
     pub x: u8,
     pub y: u8,
-    pub sr: u8,
-    pub sp: StatusRegister,
+    pub sr: StatusRegister,
+    pub sp: u8,
 }
 
 bitflags! {
@@ -30,5 +30,15 @@ bitflags! {
 impl Default for StatusRegister {
     fn default() -> Self {
         StatusRegister::empty()
+    }
+}
+
+impl StatusRegister {
+    pub fn set_flag(&mut self, flag: StatusRegister, state: bool) {
+        if state {
+            self.insert(flag);
+        } else {
+            self.remove(flag);
+        }
     }
 }

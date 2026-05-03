@@ -1,8 +1,11 @@
 use crate::addressing::AddressingMode;
 use crate::bus::Bus;
 use crate::cpu::CPU;
+use crate::opcode::instructions::Operand;
 
-type Instruction = fn(&mut CPU, &mut dyn Bus);
+pub mod instructions;
+
+type Instruction = fn(&mut CPU, &mut dyn Bus, Operand);
 
 pub struct Opcode {
     pub instruction: Instruction,
