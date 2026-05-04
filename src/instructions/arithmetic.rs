@@ -13,10 +13,10 @@ use crate::{
 #[opcode(0x65, cycles = 3, mode = ZeroPage)]
 #[opcode(0x75, cycles = 4, mode = ZeroX)]
 #[opcode(0x6D, cycles = 4, mode = Absolute)]
-#[opcode(0x7D, cycles = 4, mode = AbsoluteX, penalty = BoundaryCrossed)] //*
-#[opcode(0x79, cycles = 4, mode = AbsoluteY, penalty = BoundaryCrossed)] //*
+#[opcode(0x7D, cycles = 4, mode = AbsoluteX, penalty = BoundaryCrossed)]
+#[opcode(0x79, cycles = 4, mode = AbsoluteY, penalty = BoundaryCrossed)]
 #[opcode(0x61, cycles = 6, mode = IndirectX)]
-#[opcode(0x71, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)] //*
+#[opcode(0x71, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)]
 pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
     let m = operand.fetch(bus).unwrap();
@@ -35,6 +35,14 @@ pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     cpu.ac = result;
 }
 
+#[opcode(0xE9, cycles = 2, mode = Immediate)]
+#[opcode(0xE5, cycles = 3, mode = ZeroPage)]
+#[opcode(0xF5, cycles = 4, mode = ZeroX)]
+#[opcode(0xED, cycles = 4, mode = Absolute)]
+#[opcode(0xFD, cycles = 4, mode = AbsoluteX, penalty = BoundaryCrossed)]
+#[opcode(0xF9, cycles = 4, mode = AbsoluteY, penalty = BoundaryCrossed)]
+#[opcode(0xE1, cycles = 6, mode = IndirectX)]
+#[opcode(0xF1, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)]
 pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
     let m = operand.fetch(bus).unwrap();
