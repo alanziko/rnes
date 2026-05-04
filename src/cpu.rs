@@ -14,7 +14,7 @@ pub struct CPU {
 }
 
 bitflags! {
-    #[derive(Clone)]
+    #[derive(Copy, Clone)]
     pub struct StatusRegister: u8 {
         const Negative  = 0b10000000;
         const Overflow  = 0b01000000;
