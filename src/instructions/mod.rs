@@ -1,8 +1,8 @@
-use crate::bus::Bus;
-use crate::cpu::CPU;
+use crate::{bus::Bus, cpu::CPU};
 
 pub mod arithmetic;
 pub mod opcode;
+pub mod stack;
 
 type Instruction = fn(&mut CPU, &mut dyn Bus, Operand);
 

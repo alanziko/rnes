@@ -4,9 +4,10 @@ use crate::{
     addressing::AddressingMode::*,
     bus::Bus,
     cpu::{CPU, StatusRegister},
-    instructions::Operand,
-    instructions::opcode::CyclePenalty::*,
-    instructions::opcode::Opcode,
+    instructions::{
+        Operand,
+        opcode::{CyclePenalty::*, Opcode},
+    },
 };
 
 #[opcode(0x69, cycles = 2, mode = Immediate)]
