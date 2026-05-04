@@ -4,10 +4,19 @@ use crate::{
     addressing::AddressingMode::*,
     bus::Bus,
     cpu::{CPU, StatusRegister},
-    instructions::{Operand, opcode::Opcode},
+    instructions::Operand,
+    instructions::opcode::CyclePenalty::*,
+    instructions::opcode::Opcode,
 };
 
-#[opcode(0x69,cycles=2,mode=Implied)]
+#[opcode(0x69, cycles = 2, mode = Immediate)]
+#[opcode(0x65, cycles = 3, mode = ZeroPage)]
+#[opcode(0x75, cycles = 4, mode = ZeroX)]
+#[opcode(0x6D, cycles = 4, mode = Absolute)]
+#[opcode(0x7D, cycles = 4, mode = AbsoluteX, penalty = BoundaryCrossed)] //*
+#[opcode(0x79, cycles = 4, mode = AbsoluteY, penalty = BoundaryCrossed)] //*
+#[opcode(0x61, cycles = 6, mode = IndirectX)]
+#[opcode(0x71, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)] //*
 pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
     let m = operand.fetch(bus).unwrap();

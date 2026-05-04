@@ -7,7 +7,7 @@ use crate::addressing::AddressingMode;
 use crate::bus::{Bus, Memory};
 use crate::cpu::CPU;
 use crate::instructions::Operand;
-use crate::instructions::opcode::Opcode;
+use crate::instructions::opcode::{CyclePenalty, Opcode};
 
 fn instruction(state: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     state.pc = 67;
@@ -18,7 +18,13 @@ fn main() {
     let mut cpu = CPU::default();
     let mut ram = Memory::new();
 
-    let a = Opcode::new(1, instruction, AddressingMode::Implied, 2);
+    let a = Opcode::new(
+        1,
+        instruction,
+        AddressingMode::Implied,
+        2,
+        CyclePenalty::None,
+    );
     (a.instruction)(&mut cpu, &mut ram, Operand::None);
 
     println!("{}", cpu.pc);
