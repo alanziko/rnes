@@ -3,10 +3,10 @@ use rnes_macros::opcode;
 use crate::{
     addressing::AddressingMode::*,
     bus::Bus,
-    cpu::{CPU, StatusRegister},
+    cpu::{StatusRegister, CPU},
     instructions::{
-        Operand,
         opcode::{CyclePenalty::*, Opcode},
+        Operand,
     },
 };
 

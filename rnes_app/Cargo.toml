@@ -1,0 +1,7 @@
+[package]
+name = "rnes_app"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rnes_core = { path = "../rnes_core" }
