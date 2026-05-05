@@ -3,10 +3,10 @@ use rnes_macros::opcode;
 use crate::{
     addressing::AddressingMode::*,
     bus::Bus,
-    cpu::{StatusRegister, CPU},
+    cpu::{CPU, StatusRegister},
     instructions::{
-        opcode::{CyclePenalty::*, Opcode},
         Operand,
+        opcode::{CyclePenalty::*, Opcode},
     },
 };
 
@@ -20,7 +20,7 @@ use crate::{
 #[opcode(0x71, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)]
 pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
-    let m = operand.fetch(bus).unwrap();
+    let m = operand.read(cpu, bus).unwrap();
     let c = cpu.sr.contains(StatusRegister::Carry);
     let sum = a as u16 + m as u16 + c as u16;
 
@@ -46,7 +46,7 @@ pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
 #[opcode(0xF1, cycles = 5, mode = IndirectY, penalty = BoundaryCrossed)]
 pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let a = cpu.ac;
-    let m = operand.fetch(bus).unwrap();
+    let m = operand.read(cpu, bus).unwrap();
     let c = 1 - cpu.sr.contains(StatusRegister::Carry) as u8;
     let sum = (a as u16).wrapping_sub(m as u16).wrapping_sub(c as u16);
 
