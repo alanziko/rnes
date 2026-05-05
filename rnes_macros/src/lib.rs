@@ -40,7 +40,7 @@ impl Parse for OpcodeArgs {
 
         let cycles = map
             .remove("cycles")
-            .ok_or_else(|| input.error("missing `mode`"))?;
+            .ok_or_else(|| input.error("missing `cycles`"))?;
 
         let mode = map
             .remove("mode")
