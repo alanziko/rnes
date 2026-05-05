@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = ["rnes_core", "rnes_app", "rnes_macros"]
