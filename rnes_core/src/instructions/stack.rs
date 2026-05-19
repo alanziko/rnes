@@ -48,3 +48,36 @@ pub fn pull_status_register(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
 
     cpu.sr = sr;
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::bus::Memory;
+
+    #[test]
+    fn stack_operations_accumulator() {
+        let mut cpu = CPU::default();
+        let mut bus = Memory::new();
+
+        cpu.ac = 10;
+        push_accumulator(&mut cpu, &mut bus, Operand::None);
+        cpu.ac = 11;
+        pull_accumulator(&mut cpu, &mut bus, Operand::None);
+
+        assert_eq!(cpu.ac, 10);
+    }
+
+    #[test]
+    fn stack_operations_status_register() {
+        let mut cpu = CPU::default();
+        let mut bus = Memory::new();
+
+        let flags = StatusRegister::Interrupt | StatusRegister::Zero;
+        cpu.sr.insert(flags);
+        push_status_register(&mut cpu, &mut bus, Operand::None);
+        cpu.sr.remove(StatusRegister::Zero);
+        pull_status_register(&mut cpu, &mut bus, Operand::None);
+
+        assert!(cpu.sr.contains(flags));
+    }
+}

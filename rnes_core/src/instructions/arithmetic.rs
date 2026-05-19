@@ -65,9 +65,8 @@ pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) 
 
 #[cfg(test)]
 mod tests {
-    use crate::bus::Memory;
-
     use super::*;
+    use crate::bus::Memory;
 
     #[test]
     fn add_with_carry_carry() {
