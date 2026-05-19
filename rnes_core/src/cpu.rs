@@ -32,13 +32,3 @@ impl Default for StatusRegister {
         StatusRegister::empty()
     }
 }
-
-impl StatusRegister {
-    pub fn set_flag(&mut self, flag: StatusRegister, state: bool) {
-        if state {
-            self.insert(flag);
-        } else {
-            self.remove(flag);
-        }
-    }
-}

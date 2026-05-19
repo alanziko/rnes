@@ -26,12 +26,12 @@ pub fn add_with_carry(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
 
     let result = sum as u8;
 
-    cpu.sr.set_flag(StatusRegister::Carry, sum > 0xFF);
-    cpu.sr.set_flag(StatusRegister::Zero, result == 0);
+    cpu.sr.set(StatusRegister::Carry, sum > 0xFF);
+    cpu.sr.set(StatusRegister::Zero, result == 0);
     let negative = (result & 0x80) != 0;
-    cpu.sr.set_flag(StatusRegister::Negative, negative);
+    cpu.sr.set(StatusRegister::Negative, negative);
     let overflow = ((a ^ result) & (m ^ result) & 0x80) != 0;
-    cpu.sr.set_flag(StatusRegister::Overflow, overflow);
+    cpu.sr.set(StatusRegister::Overflow, overflow);
 
     cpu.ac = result;
 }
@@ -53,12 +53,12 @@ pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) 
     let result = sum as u8;
 
     let carry = a as u16 >= (m as u16 + c as u16);
-    cpu.sr.set_flag(StatusRegister::Carry, carry);
-    cpu.sr.set_flag(StatusRegister::Zero, result == 0);
+    cpu.sr.set(StatusRegister::Carry, carry);
+    cpu.sr.set(StatusRegister::Zero, result == 0);
     let negative = (result & 0x80) != 0;
-    cpu.sr.set_flag(StatusRegister::Negative, negative);
+    cpu.sr.set(StatusRegister::Negative, negative);
     let overflow = ((a ^ result) & (a ^ m) & 0x80) != 0;
-    cpu.sr.set_flag(StatusRegister::Overflow, overflow);
+    cpu.sr.set(StatusRegister::Overflow, overflow);
 
     cpu.ac = result;
 }

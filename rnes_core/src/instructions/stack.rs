@@ -33,9 +33,9 @@ pub fn pull_accumulator(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     cpu.sp = cpu.sp.wrapping_add(1);
     cpu.ac = bus.get_byte(cpu.sp as u16 | STACK);
 
-    cpu.sr.set_flag(StatusRegister::Zero, cpu.ac == 0);
+    cpu.sr.set(StatusRegister::Zero, cpu.ac == 0);
     let negative = (cpu.ac & 0x80) != 0;
-    cpu.sr.set_flag(StatusRegister::Negative, negative);
+    cpu.sr.set(StatusRegister::Negative, negative);
 }
 
 #[opcode(0x28, cycles = 4, mode = Implied)]
