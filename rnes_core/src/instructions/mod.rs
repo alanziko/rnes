@@ -1,6 +1,7 @@
 use crate::{bus::Bus, cpu::CPU};
 
 pub mod arithmetic;
+pub mod flag;
 pub mod opcode;
 pub mod stack;
 
