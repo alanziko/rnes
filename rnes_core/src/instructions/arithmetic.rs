@@ -66,12 +66,12 @@ pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::bus::Memory;
+    use crate::bus::DebugBus;
 
     #[test]
     fn add_with_carry_carry() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         bus.set_byte(0x0000, 30);
         cpu.ac = 0;
         cpu.sr.insert(StatusRegister::Carry);
@@ -83,7 +83,7 @@ mod tests {
     #[test]
     fn add_with_carry_no_carry() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         cpu.ac = 0;
 
@@ -95,7 +95,7 @@ mod tests {
     #[test]
     fn add_with_carry_overflow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 100;
 
         add_with_carry(&mut cpu, &mut bus, Operand::Value(50));
@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn add_with_carry_negative() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 100;
 
         add_with_carry(&mut cpu, &mut bus, Operand::Value(50));
@@ -115,7 +115,7 @@ mod tests {
     #[test]
     fn add_with_carry_zero() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         cpu.ac = 0;
         add_with_carry(&mut cpu, &mut bus, Operand::Value(0));
@@ -125,7 +125,7 @@ mod tests {
     #[test]
     fn sub_with_carry_zero() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 10;
         cpu.sr.insert(StatusRegister::Carry);
 
@@ -137,7 +137,7 @@ mod tests {
     #[test]
     fn sub_with_carry_borrow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 0;
         cpu.sr.insert(StatusRegister::Carry);
 
@@ -150,7 +150,7 @@ mod tests {
     #[test]
     fn sub_with_carry_no_borrow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 10;
         cpu.sr.insert(StatusRegister::Carry);
 
@@ -162,7 +162,7 @@ mod tests {
     #[test]
     fn sub_with_carry_edge_borrow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 0;
         cpu.sr.insert(StatusRegister::Carry);
 
@@ -174,7 +174,7 @@ mod tests {
     #[test]
     fn sub_with_carry_overflow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 127;
         cpu.sr.insert(StatusRegister::Carry);
 
@@ -186,7 +186,7 @@ mod tests {
     #[test]
     fn sub_with_carry_negative() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
         cpu.ac = 20;
 
         subtract_with_borrow(&mut cpu, &mut bus, Operand::Value(40));

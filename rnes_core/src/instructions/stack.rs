@@ -52,12 +52,12 @@ pub fn pull_status_register(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::bus::Memory;
+    use crate::bus::DebugBus;
 
     #[test]
     fn stack_operations_accumulator() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         cpu.ac = 10;
         push_accumulator(&mut cpu, &mut bus, Operand::None);
@@ -70,7 +70,7 @@ mod tests {
     #[test]
     fn stack_operations_status_register() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         let flags = StatusRegister::Interrupt | StatusRegister::Zero;
         cpu.sr.insert(flags);

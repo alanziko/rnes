@@ -45,14 +45,14 @@ pub fn set_interrupt(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
 
 #[cfg(test)]
 mod tests {
-    use crate::bus::Memory;
+    use crate::bus::DebugBus;
 
     use super::*;
 
     #[test]
     fn manipulate_carry() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         set_carry(&mut cpu, &mut bus, Operand::None);
         assert!(cpu.sr.contains(StatusRegister::Carry));
@@ -63,7 +63,7 @@ mod tests {
     #[test]
     fn manipulate_decimal() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         set_decimal(&mut cpu, &mut bus, Operand::None);
         assert!(cpu.sr.contains(StatusRegister::Decimal));
@@ -74,7 +74,7 @@ mod tests {
     #[test]
     fn manipulate_interrupt() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         set_interrupt(&mut cpu, &mut bus, Operand::None);
         assert!(cpu.sr.contains(StatusRegister::Interrupt));
@@ -85,7 +85,7 @@ mod tests {
     #[test]
     fn manipulate_overflow() {
         let mut cpu = CPU::default();
-        let mut bus = Memory::new();
+        let mut bus = DebugBus::new();
 
         cpu.sr.insert(StatusRegister::Overflow);
 
