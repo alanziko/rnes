@@ -1,4 +1,4 @@
-use crate::{addressing::AddressingMode, instructions::Instruction};
+use crate::{cpu::addressing::AddressingMode, cpu::instructions::Instruction};
 
 inventory::collect!(Opcode);
 
