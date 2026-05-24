@@ -63,6 +63,10 @@ pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) 
     cpu.ac = result;
 }
 
+#[opcode(0xE6, cycles = 5, mode = ZeroPage)]
+#[opcode(0xF6, cycles = 6, mode = ZeroX)]
+#[opcode(0xEE, cycles = 6, mode = Absolute)]
+#[opcode(0xFE, cycles = 7, mode = AbsoluteX)]
 pub fn increment(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let value = operand.read(cpu, bus).unwrap().wrapping_add(1);
     operand.write(cpu, bus, value);
@@ -72,6 +76,7 @@ pub fn increment(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     cpu.sr.set(StatusRegister::Negative, negative);
 }
 
+#[opcode(0xE8, cycles = 2, mode = Implied)]
 pub fn increment_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.x = cpu.x.wrapping_add(1);
 
@@ -80,6 +85,7 @@ pub fn increment_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.sr.set(StatusRegister::Negative, negative);
 }
 
+#[opcode(0xC8, cycles = 2, mode = Implied)]
 pub fn increment_y(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.y = cpu.y.wrapping_add(1);
 
@@ -88,6 +94,10 @@ pub fn increment_y(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.sr.set(StatusRegister::Negative, negative);
 }
 
+#[opcode(0xC6, cycles = 5, mode = ZeroPage)]
+#[opcode(0xD6, cycles = 6, mode = ZeroX)]
+#[opcode(0xCE, cycles = 6, mode = Absolute)]
+#[opcode(0xDE, cycles = 7, mode = AbsoluteX)]
 pub fn decrement(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     let value = operand.read(cpu, bus).unwrap().wrapping_sub(1);
     operand.write(cpu, bus, value);
@@ -97,6 +107,7 @@ pub fn decrement(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     cpu.sr.set(StatusRegister::Negative, negative);
 }
 
+#[opcode(0xCA, cycles = 2, mode = Implied)]
 pub fn decrement_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.x = cpu.x.wrapping_sub(1);
 
@@ -105,6 +116,7 @@ pub fn decrement_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.sr.set(StatusRegister::Negative, negative);
 }
 
+#[opcode(0x88, cycles = 2, mode = Implied)]
 pub fn decrement_y(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
     cpu.y = cpu.y.wrapping_sub(1);
 

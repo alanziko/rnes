@@ -1,14 +1,16 @@
 use rnes_macros::opcode;
 
-use crate::{cpu::{
-    addressing::AddressingMode::*,
-    CPU, 
-    StatusRegister,
-    instructions::{
-        Operand,
-        opcode::{CyclePenalty::*, Opcode},
+use crate::{
+    bus::Bus,
+    cpu::{
+        CPU, StatusRegister,
+        addressing::AddressingMode::*,
+        instructions::{
+            Operand,
+            opcode::{CyclePenalty::*, Opcode},
+        },
     },
-}, bus::Bus};
+};
 
 const STACK: u16 = 0x0100;
 
@@ -43,8 +45,7 @@ pub fn pull_status_register(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     cpu.sp = cpu.sp.wrapping_add(1);
     let mut sr = StatusRegister::from_bits_truncate(bus.get_byte(cpu.sp as u16 | STACK));
 
-    sr.insert(StatusRegister::Ignored);
-    sr.insert(StatusRegister::Break); // !
+    sr |= StatusRegister::from_bits_truncate(0b11001111);
 
     cpu.sr = sr;
 }
