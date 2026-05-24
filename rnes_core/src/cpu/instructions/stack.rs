@@ -91,4 +91,18 @@ mod tests {
 
         assert!(cpu.sr.contains(flags));
     }
+
+    #[test]
+    fn stack_transfer_x() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        cpu.sp = 0x67;
+        transfer_stack_to_x(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.x, 0x67);
+
+        cpu.x += 1;
+        transfer_x_to_stack(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.x, 0x68);
+    }
 }
