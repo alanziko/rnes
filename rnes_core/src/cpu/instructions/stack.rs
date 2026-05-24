@@ -1,14 +1,14 @@
 use rnes_macros::opcode;
 
-use crate::{
+use crate::{cpu::{
     addressing::AddressingMode::*,
-    bus::Bus,
-    cpu::{CPU, StatusRegister},
+    CPU, 
+    StatusRegister,
     instructions::{
         Operand,
         opcode::{CyclePenalty::*, Opcode},
     },
-};
+}, bus::Bus};
 
 const STACK: u16 = 0x0100;
 

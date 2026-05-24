@@ -1,3 +1,7 @@
+pub mod bus;
+pub mod addressing;
+pub mod instructions;
+
 use bitflags::bitflags;
 
 // TODO
