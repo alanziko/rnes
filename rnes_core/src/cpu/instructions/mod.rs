@@ -7,6 +7,7 @@ pub mod stack;
 
 type Instruction = fn(&mut CPU, &mut dyn Bus, Operand);
 
+#[derive(Copy, Clone)]
 pub enum Operand {
     Address(u16),
     Value(u8),

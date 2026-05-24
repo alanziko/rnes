@@ -1,13 +1,13 @@
 use rnes_macros::opcode;
 
 use crate::{
-    cpu::addressing::AddressingMode::*,
     bus::Bus,
-    cpu::{CPU, StatusRegister},
+    cpu::addressing::AddressingMode::*,
     cpu::instructions::{
         Operand,
         opcode::{CyclePenalty::*, Opcode},
     },
+    cpu::{CPU, StatusRegister},
 };
 
 #[opcode(0x69, cycles = 2, mode = Immediate)]
@@ -61,6 +61,56 @@ pub fn subtract_with_borrow(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) 
     cpu.sr.set(StatusRegister::Overflow, overflow);
 
     cpu.ac = result;
+}
+
+pub fn increment(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
+    let value = operand.read(cpu, bus).unwrap().wrapping_add(1);
+    operand.write(cpu, bus, value);
+
+    cpu.sr.set(StatusRegister::Zero, value == 0);
+    let negative = (value & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
+}
+
+pub fn increment_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.x = cpu.x.wrapping_add(1);
+
+    cpu.sr.set(StatusRegister::Zero, cpu.x == 0);
+    let negative = (cpu.x & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
+}
+
+pub fn increment_y(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.y = cpu.y.wrapping_add(1);
+
+    cpu.sr.set(StatusRegister::Zero, cpu.y == 0);
+    let negative = (cpu.x & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
+}
+
+pub fn decrement(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
+    let value = operand.read(cpu, bus).unwrap().wrapping_sub(1);
+    operand.write(cpu, bus, value);
+
+    cpu.sr.set(StatusRegister::Zero, value == 0);
+    let negative = (value & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
+}
+
+pub fn decrement_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.x = cpu.x.wrapping_sub(1);
+
+    cpu.sr.set(StatusRegister::Zero, cpu.x == 0);
+    let negative = (cpu.x & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
+}
+
+pub fn decrement_y(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.y = cpu.y.wrapping_sub(1);
+
+    cpu.sr.set(StatusRegister::Zero, cpu.y == 0);
+    let negative = (cpu.x & 0x80) != 0;
+    cpu.sr.set(StatusRegister::Negative, negative);
 }
 
 #[cfg(test)]
@@ -191,5 +241,49 @@ mod tests {
 
         subtract_with_borrow(&mut cpu, &mut bus, Operand::Value(40));
         assert!(cpu.sr.contains(StatusRegister::Negative));
+    }
+
+    #[test]
+    fn increment_decrement_memory() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        let address = 0x0000;
+        let operand = Operand::Address(address);
+        bus.set_byte(address, 67);
+
+        increment(&mut cpu, &mut bus, operand);
+        assert_eq!(bus.get_byte(address), 68);
+
+        decrement(&mut cpu, &mut bus, operand);
+        assert_eq!(bus.get_byte(address), 67);
+    }
+
+    #[test]
+    fn increment_decrement_x() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        cpu.x = 67;
+
+        increment_x(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.x, 68);
+
+        decrement_x(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.x, 67);
+    }
+
+    #[test]
+    fn increment_decrement_y() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        cpu.y = 67;
+
+        increment_y(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.y, 68);
+
+        decrement_y(&mut cpu, &mut bus, Operand::None);
+        assert_eq!(cpu.y, 67);
     }
 }
