@@ -50,6 +50,16 @@ pub fn pull_status_register(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     cpu.sr = sr;
 }
 
+#[opcode(0x9A, cycles = 2, mode = Implied)]
+pub fn transfer_x_to_stack(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.sp = cpu.x;
+}
+
+#[opcode(0xBA, cycles = 2, mode = Implied)]
+pub fn transfer_stack_to_x(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {
+    cpu.x = cpu.sp;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
