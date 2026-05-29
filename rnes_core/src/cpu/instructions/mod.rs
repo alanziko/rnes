@@ -4,6 +4,7 @@ pub mod access;
 pub mod arithmetic;
 pub mod flag;
 pub mod opcode;
+pub mod shift;
 pub mod stack;
 pub mod transfer;
 
