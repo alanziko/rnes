@@ -5,6 +5,7 @@ pub mod arithmetic;
 pub mod flag;
 pub mod opcode;
 pub mod stack;
+pub mod transfer;
 
 type Instruction = fn(&mut CPU, &mut dyn Bus, Operand);
 
