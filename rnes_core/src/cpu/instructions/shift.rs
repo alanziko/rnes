@@ -89,3 +89,37 @@ fn rotate_right(cpu: &mut CPU, bus: &mut dyn Bus, operand: Operand) {
     cpu.sr.set(StatusRegister::Zero, value == 0);
     cpu.sr.set(StatusRegister::Negative, value & 0x80 != 0)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::bus::DebugBus;
+
+    #[test]
+    fn shift() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        cpu.ac = 0b01111111;
+        arithmetic_shift_left(&mut cpu, &mut bus, Operand::Accumulator);
+        assert_eq!(cpu.ac, 0b11111110);
+
+        logical_shift_right(&mut cpu, &mut bus, Operand::Accumulator);
+        assert_eq!(cpu.ac, 0b01111111);
+    }
+
+    #[test]
+    fn rotate() {
+        let mut cpu = CPU::default();
+        let mut bus = DebugBus::new();
+
+        cpu.ac = 0b11111111;
+        rotate_left(&mut cpu, &mut bus, Operand::Accumulator);
+        assert_eq!(cpu.ac, 0b11111110);
+        assert!(cpu.sr.contains(StatusRegister::Carry));
+
+        rotate_right(&mut cpu, &mut bus, Operand::Accumulator);
+        assert_eq!(cpu.ac, 0b11111111);
+        assert!(!cpu.sr.contains(StatusRegister::Carry))
+    }
+}
