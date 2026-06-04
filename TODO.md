@@ -12,3 +12,4 @@
 [ ] Assert CPU flags during tests
 [ ] Rename test functions
 [ ] Implement bitwise operators tests
+[ ] Implement compare instructions tests
