@@ -3,6 +3,7 @@ use rnes_core::bus::{Bus, DebugBus};
 use rnes_core::cpu::CPU;
 use rnes_core::cpu::instructions::Operand;
 use rnes_core::cpu::instructions::opcode::{CyclePenalty, Opcode};
+use rnes_core::ppu::memory_map::palettes::lookup::ColorLUT;
 
 fn instruction(state: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     state.pc = 67;
@@ -25,4 +26,8 @@ fn main() {
     (a.instruction)(&mut cpu, &mut ram, Operand::None);
 
     println!("{}", cpu.pc);
+
+    let lut = ColorLUT::from_path("assets/palettes/nestopia.pal").unwrap();
+
+    print!("{}", lut);
 }
