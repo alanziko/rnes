@@ -13,3 +13,4 @@
 [ ] Rename test functions
 [ ] Implement bitwise operators tests
 [ ] Implement compare instructions tests
+[ ] Implement jump instructions tests

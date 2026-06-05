@@ -1,6 +1,6 @@
-use rnes_core::cpu::addressing::AddressingMode;
 use rnes_core::bus::{Bus, DebugBus};
 use rnes_core::cpu::CPU;
+use rnes_core::cpu::addressing::AddressingMode;
 use rnes_core::cpu::instructions::Operand;
 use rnes_core::cpu::instructions::opcode::{CyclePenalty, Opcode};
 
@@ -10,8 +10,6 @@ fn instruction(state: &mut CPU, bus: &mut dyn Bus, _: Operand) {
 }
 
 fn main() {
-
-
     let mut cpu = CPU::default();
     let mut ram = DebugBus::new();
 

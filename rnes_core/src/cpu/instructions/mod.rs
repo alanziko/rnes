@@ -5,6 +5,7 @@ pub mod arithmetic;
 pub mod bitwise;
 pub mod compare;
 pub mod flag;
+pub mod jump;
 pub mod opcode;
 pub mod shift;
 pub mod stack;
@@ -36,6 +37,14 @@ impl Operand {
             Operand::Value(_) => panic!("cannot write to immediate value"),
             Operand::Accumulator => cpu.ac = value,
             Operand::None => panic!(),
+        }
+    }
+
+    pub fn read_address(&self) -> Option<u16> {
+        if let Operand::Address(address) = self {
+            Some(*address)
+        } else {
+            None
         }
     }
 }

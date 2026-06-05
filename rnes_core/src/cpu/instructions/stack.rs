@@ -45,7 +45,7 @@ pub fn pull_status_register(cpu: &mut CPU, bus: &mut dyn Bus, _: Operand) {
     cpu.sp = cpu.sp.wrapping_add(1);
     let mut sr = StatusRegister::from_bits_truncate(bus.get_byte(cpu.sp as u16 | STACK));
 
-    sr |= StatusRegister::from_bits_truncate(0b11001111);
+    sr &= StatusRegister::from_bits_truncate(0b11001111);
 
     cpu.sr = sr;
 }
