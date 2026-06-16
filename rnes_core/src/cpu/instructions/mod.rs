@@ -3,6 +3,7 @@ use crate::{bus::Bus, cpu::CPU};
 pub mod access;
 pub mod arithmetic;
 pub mod bitwise;
+pub mod branch;
 pub mod compare;
 pub mod flag;
 pub mod jump;

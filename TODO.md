@@ -7,6 +7,7 @@
 ## CPU implementation
 [ ] Rename instruction functions (?)
 [ ] Look further into the read-modify-write instruction mechanism (LSR, ROL, ROR, ASL, INC, DEC)
+[ ] Refactor addressing
 
 ## Tests
 [ ] Assert CPU flags during tests
@@ -14,3 +15,4 @@
 [ ] Implement bitwise operators tests
 [ ] Implement compare instructions tests
 [ ] Implement jump instructions tests
+[ ] Implement branch instructions tests
