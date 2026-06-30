@@ -15,33 +15,21 @@ pub trait Bus {
     }
 }
 
-pub struct DebugMemory {
+pub struct DebugBus {
     pub data: [u8; 65536],
 }
 
-impl DebugMemory {
+impl DebugBus {
     pub fn new() -> Self {
         Self { data: [0u8; 65536] }
     }
 }
 
-pub struct DebugBus {
-    memory: DebugMemory,
-}
-
-impl DebugBus {
-    pub fn new() -> Self {
-        Self {
-            memory: DebugMemory::new(),
-        }
-    }
-}
-
 impl Bus for DebugBus {
     fn get_byte(&self, address: u16) -> u8 {
-        self.memory.data[address as usize]
+        self.data[address as usize]
     }
     fn set_byte(&mut self, address: u16, value: u8) {
-        self.memory.data[address as usize] = value;
+        self.data[address as usize] = value;
     }
 }
