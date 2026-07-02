@@ -5,12 +5,11 @@ use crate::{
     cpu::{
         CPU, StatusRegister,
         addressing::AddressingMode::*,
-        instructions::{
-            Operand,
-            opcode::{CyclePenalty::*, Opcode},
-        },
+        instructions::Operand,
+        opcode::{CyclePenalty::*, Opcode},
     },
 };
+
 const STACK: u16 = 0x0100;
 
 #[opcode(0x4C, cycles = 3, mode = Absolute)]

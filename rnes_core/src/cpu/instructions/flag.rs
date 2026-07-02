@@ -1,14 +1,14 @@
 use rnes_macros::opcode;
 
-use crate::{{
+use crate::{
     bus::Bus,
-}, cpu::{
-    instructions::Operand,
-    instructions::opcode::{CyclePenalty::*, Opcode},
-    addressing::AddressingMode::*,
-    CPU,
-    StatusRegister
-}};
+    cpu::{
+        CPU, StatusRegister,
+        addressing::AddressingMode::*,
+        instructions::Operand,
+        opcode::{CyclePenalty::*, Opcode},
+    },
+};
 
 #[opcode(0x18, cycles = 2, mode = Implied)]
 pub fn clear_carry(cpu: &mut CPU, _: &mut dyn Bus, _: Operand) {

@@ -5,10 +5,8 @@ use crate::{
     cpu::{
         CPU, StatusRegister,
         addressing::AddressingMode::*,
-        instructions::{
-            Operand,
-            opcode::{CyclePenalty::*, Opcode},
-        },
+        instructions::Operand,
+        opcode::{CyclePenalty::*, Opcode},
     },
 };
 

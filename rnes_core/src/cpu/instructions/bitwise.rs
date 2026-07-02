@@ -2,12 +2,12 @@ use rnes_macros::opcode;
 
 use crate::{
     bus::Bus,
-    cpu::addressing::AddressingMode::*,
-    cpu::instructions::{
-        Operand,
+    cpu::{
+        CPU, StatusRegister,
+        addressing::AddressingMode::*,
+        instructions::Operand,
         opcode::{CyclePenalty::*, Opcode},
     },
-    cpu::{CPU, StatusRegister},
 };
 
 #[opcode(0x29, cycles = 2, mode = Immediate)]

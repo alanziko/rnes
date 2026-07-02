@@ -1,14 +1,4 @@
-use crate::bus::{Bus};
-
-struct RAM {
-    pub data: [u8; 2048],
-}
-
-impl RAM {
-    pub fn new() -> Self {
-        Self { data: [0u8; 2048] }
-    }
-}
+use crate::bus::Bus;
 
 pub struct CPUBus {
     ram: RAM,
@@ -33,5 +23,15 @@ impl Bus for CPUBus {
             0x0000..=0x1FFF => self.ram.data[(address % 2048) as usize] = value,
             _ => todo!(),
         }
+    }
+}
+
+struct RAM {
+    pub data: [u8; 2048],
+}
+
+impl RAM {
+    pub fn new() -> Self {
+        Self { data: [0u8; 2048] }
     }
 }

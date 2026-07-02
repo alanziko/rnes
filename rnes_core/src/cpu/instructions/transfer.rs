@@ -6,7 +6,7 @@ use crate::{
         CPU, StatusRegister,
         addressing::AddressingMode::*,
         instructions::Operand,
-        instructions::opcode::{CyclePenalty::*, Opcode},
+        opcode::{CyclePenalty::*, Opcode},
     },
 };
 
