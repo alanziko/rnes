@@ -15,8 +15,7 @@ use crate::{
     },
 };
 
-// TODO
-// implement correct default values
+// TODO: Implement correct default values
 
 #[derive(Default, Clone)]
 pub struct CPU {
@@ -91,9 +90,10 @@ impl CPU {
             }
             IndirectY => {
                 let ptr = bus.get_byte(self.pc);
-                let low = bus.get_byte(ptr as u16);
-                let high = bus.get_byte(ptr.wrapping_add(1) as u16);
-                let address = u16::from_le_bytes([low, high]).wrapping_add(self.y as u16);
+                // let low = bus.get_byte(ptr as u16);
+                // let high = bus.get_byte(ptr.wrapping_add(1) as u16);
+                // let address = u16::from_le_bytes([low, high]).wrapping_add(self.y as u16);
+                let address = bus.get_word(ptr as u16);
                 self.pc += 1;
                 Operand::Address(address)
             }

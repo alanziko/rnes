@@ -20,11 +20,11 @@ impl Opcode {
         cycle_penalty: CyclePenalty,
     ) -> Self {
         Self {
-            code: code,
-            instruction: instruction,
-            mode: mode,
-            cycles: cycles,
-            cycle_penalty: cycle_penalty,
+            code,
+            instruction,
+            mode,
+            cycles,
+            cycle_penalty,
         }
     }
 }
@@ -36,16 +36,17 @@ pub enum CyclePenalty {
     None,
 }
 
-static OPCODE_LOOKUP: OnceLock<[Option<&'static Opcode>; 256]> = OnceLock::new();
+static OPCODES: OnceLock<[Option<&'static Opcode>; 256]> = OnceLock::new();
 
 inventory::collect!(Opcode);
 
 pub fn get_opcodes_lookup() -> &'static [Option<&'static Opcode>; 256] {
-    OPCODE_LOOKUP.get_or_init(|| {
-        let mut lookup_table = [None; 256];
-        for op in inventory::iter::<Opcode> {
-            lookup_table[op.code as usize] = Some(op)
-        }
-        lookup_table
+    OPCODES.get_or_init(|| {
+        inventory::iter::<Opcode>
+            .into_iter()
+            .fold([None; _], |mut acc, op| {
+                acc[op.code as usize] = Some(op);
+                acc
+            })
     })
 }
