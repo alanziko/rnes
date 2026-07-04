@@ -29,6 +29,8 @@ pub struct CPU {
 }
 
 impl CPU {
+    pub const STACK: u16 = 0x0100;
+
     pub fn new() -> Self {
         Self {
             pc: 0x0600, // change to reset vector

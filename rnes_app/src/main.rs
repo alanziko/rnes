@@ -1,26 +1,24 @@
-use rnes_core::bus::{Bus, DebugBus};
+use rnes_core::bus::Bus;
 use rnes_core::cpu::CPU;
-use rnes_core::cpu::addressing::AddressingMode;
-use rnes_core::cpu::instructions::Operand;
-use rnes_core::cpu::instructions::opcode::{CyclePenalty, Opcode};
-
-fn instruction(state: &mut CPU, bus: &mut dyn Bus, _: Operand) {
-    state.pc = 67;
-    bus.set_byte(0x0000, 67);
-}
+use rnes_core::cpu::bus::CPUBus;
+use std::fs;
 
 fn main() {
-    let mut cpu = CPU::default();
-    let mut ram = DebugBus::new();
+    let mut cpu = CPU::new();
+    let mut bus = CPUBus::new();
 
-    let a = Opcode::new(
-        1,
-        instruction,
-        AddressingMode::Implied,
-        2,
-        CyclePenalty::None,
-    );
-    (a.instruction)(&mut cpu, &mut ram, Operand::None);
+    let bytes = fs::read("code.bin").unwrap();
 
-    println!("{}", cpu.pc);
+    let mut addr = 0x0600;
+
+    for byte in bytes {
+        bus.set_byte(addr, byte);
+        addr += 1;
+    }
+
+    for _ in 0..20 {
+        cpu.step(&mut bus);
+    }
+
+    println!("{}", cpu.ac);
 }

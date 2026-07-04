@@ -5,7 +5,7 @@ pub enum Operand {
     Address(u16),
     Value(u8),
     Accumulator,
-    None, // This might be useless
+    None,
 }
 
 impl Operand {
